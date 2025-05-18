@@ -1,0 +1,1339 @@
+/* Modern Parking UI - Fixed Grid Layout */
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+}
+
+/* Background Elements */
+.main::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+}
+
+/* עדכון הגריד להצמדת זוגות שורות (A+B, C+D, E+F) ללא רווחים */
+.carParkings {
+    width: 95vw; /* הקטנת הרוחב מ-95vw ל-90vw */
+    max-width: 1600px; /* הקטנת הרוחב המקסימלי */
+    height: auto;
+    min-height: 70vh;
+    background-color: #1e293b;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px; /* מרווח בין זוגות שורות - כאן יעבור המסלול */
+    padding: 40px 60px; /* הגדלת הפדינג בצדדים */
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: visible;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 20px 0;
+}
+
+/* מיכל לזוג שורות - ללא רווח ביניהן */
+.row-pair-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    z-index: 2; /* מעל המסלול */
+}
+
+/* שורה בודדת */
+.row-container {
+    display: flex;
+    width: 100%;
+    position: relative;
+}
+
+/* הסרת תווית שורה בצד שמאל */
+.row-label {
+    display: none;
+}
+
+/* מיכל לחניות בשורה */
+.spots-container {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+    gap: 0.5px; /* רווח של חצי פיקסל בין החניות */
+    width: 100%;
+    padding: 8px;
+}
+
+/* החזרת מספור העמודות */
+.column-numbers {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+    width: 90vw; /* התאמה לרוחב החדש של carParkings */
+    max-width: 1700px;
+    gap: 2px;
+    padding: 0 40px; /* התאמה לפדינג של carParkings */
+    margin-bottom: 5px;
+}
+
+.column-number {
+    text-align: center;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* מסלול חיצים מהכניסה ליציאה - עובר בין זוגות שורות */
+.arrow-path {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1; /* מתחת לשורות החניה */
+}
+
+/* חיצים במסלול */
+.path-arrow {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: rgba(59, 130, 246, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pulse-arrow 2s infinite;
+    z-index: 1;
+}
+
+.path-arrow svg {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 18px;
+}
+
+/* מיקום החיצים במסלול - בין זוגות שורות ולא על חניות */
+/* שורה ראשונה - מהכניסה ימינה */
+.path-arrow:nth-child(1) { top: 5px !important; left: 2% !important; }
+.path-arrow:nth-child(2) { top: 5px !important; left: 20% !important; }
+.path-arrow:nth-child(3) { top: 5px; left: 40%; }
+.path-arrow:nth-child(4) { top: 5px; left: 60%; }
+.path-arrow:nth-child(5) { top: 5px; left: 80%; }
+
+/* ירידה למטה בצד ימין */
+.path-arrow:nth-child(6) { top: 25%; right: 1%; left: auto; transform: rotate(90deg); }
+
+/* שורה שנייה - משמאל לימין במרווח בין זוג ראשון לשני */
+.path-arrow:nth-child(7) { top: 45%; left: 80%; transform: rotate(180deg); }
+.path-arrow:nth-child(8) { top: 45%; left: 60%; transform: rotate(180deg); }
+.path-arrow:nth-child(9) { top: 45%; left: 40%; transform: rotate(180deg); }
+.path-arrow:nth-child(10) { top: 45%; left: 20%; transform: rotate(180deg); }
+.path-arrow:nth-child(11) { top: 45%; left: 2%; transform: rotate(180deg); }
+
+/* ירידה למטה בצד שמאל */
+.path-arrow:nth-child(12) { top: 65%; left: 1%; transform: rotate(90deg); }
+
+/* שורה שלישית - מימין לשמאל במרווח בין זוג שני לשלישי */
+.path-arrow:nth-child(13) { top: 85%; left: 20%; }
+.path-arrow:nth-child(14) { top: 85%; left: 40%; }
+.path-arrow:nth-child(15) { top: 85%; left: 60%; }
+
+
+/* ירידה למטה בצד ימין ליציאה - מסתיים בדיוק ביציאה */
+.path-arrow:nth-child(16) { bottom: 5%; right: 1%; left: auto; top: auto; transform: rotate(90deg); }
+.path-arrow:nth-child(17) { bottom: 2%; right: 5%; left: auto; top: auto; transform: rotate(180deg); }
+
+/* ירידה למטה בצד שמאל - החץ החדש שהוספנו */
+.path-arrow:nth-child(18) { top: 20%; left: 1%; transform: rotate(90deg); }
+
+/* אנימציה לחיצים */
+@keyframes pulse-arrow {
+    0%, 100% {
+        opacity: 0.6;
+        transform: scale(1) rotate(var(--rotation, 0deg));
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2) rotate(var(--rotation, 0deg));
+    }
+}
+
+/* קו מקווקו המחבר בין החיצים */
+.arrow-path-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.horizontal-path {
+    position: absolute;
+    height: 4px;
+    background: repeating-linear-gradient(
+        90deg,
+        rgba(59, 130, 246, 0.4),
+        rgba(59, 130, 246, 0.4) 10px,
+        transparent 10px,
+        transparent 20px
+    );
+}
+
+.vertical-path {
+    position: absolute;
+    width: 4px;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(59, 130, 246, 0.4),
+        rgba(59, 130, 246, 0.4) 10px,
+        transparent 10px,
+        transparent 20px
+    );
+}
+
+/* מיקום הקווים המקווקווים - מותאם כך שלא יעלה על חניות
+.path-top { top: 5px !important; left: 0% !important; width: 99% !important; height: 4px !important; }
+.path-right-1 { top: 5px; right: 1%; left: auto; width: 4px; height: 40%; }
+.path-middle-1 { top: 45%; left: 2%; width: 78%; height: 4px; }
+.path-left { top: 45%; left: 1%; width: 4px; height: 40%; }
+.path-middle-2 { top: 85%; left: 2%; width: 78%; height: 4px; }
+.path-right-2 { top: 85%; right: 1%; left: auto; width: 4px; height: 15%; }
+.path-bottom { bottom: 2%; right: 1%; left: auto; top: auto; width: 10%; height: 4px; } */
+
+/* התאמת צבעים למקרא */
+.cp[style*="backgroundColor: white"] {
+    background-color: #334155 !important; /* צבע חניות פנויות */
+
+    border: 0; /* הסרת הגבול */
+}
+
+.cp[style*="backgroundColor: red"] {
+    background-color: rgba(220, 38, 38, 0.7) !important; /* צבע חניות תפוסות */
+
+
+    border: 0; /* הסרת הגבול */
+    box-shadow: none; /* הסרת הצל */
+}
+
+.cp[style*="backgroundColor: yellow"] {
+    background-color: rgba(234, 179, 8, 0.7) !important; /* צבע חניה נבחרת */
+
+
+
+    border: 0; /* הסרת הגבול */
+    box-shadow: none; /* הסרת הצל */
+}
+
+.cp[style*="backgroundColor: rgb(158, 168, 166)"] {
+    background-color: rgba(14, 165, 233, 0.7) !important; /* צבע הרכב שלך */
+
+
+
+    border: 0; /* הסרת הגבול */
+    box-shadow: none; /* הסרת הצל */
+}
+
+/* עדכון סגנון מספר החניה */
+.spot-number {
+    position: relative;
+    font-size: 0.9rem;
+    z-index: 2;
+    font-weight: 700;
+    padding: 0;
+    background: none;
+    border: none;
+    box-shadow: none;
+}
+
+/* התאמת גודל החניות */
+.cp {
+    width: 100%;
+    aspect-ratio: 1/1.2;
+    border: 0;
+    position: relative;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+   
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 600;
+    box-shadow: none;
+    overflow: hidden;
+    z-index: 2;
+    text-align: center;
+    margin: 0;
+    padding: 5px 0;
+}
+
+/* סגנון לאייקון הרכב */
+.car-icon {
+    margin-bottom: 0;
+    transition: all 0.3s ease;
+}
+
+/* אנימציה לאייקון הרכב בחניות תפוסות */
+.cp[style*="backgroundColor: red"] .car-icon {
+    animation: carPulse 2s infinite;
+    opacity: 0.9 !important;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4)) !important;
+}
+
+/* אנימציה לאייקון הרכב בחניה נבחרת או הרכב שלך */
+.cp[style*="backgroundColor: yellow"] .car-icon,
+.cp[style*="backgroundColor: rgba(14, 165, 233, 0.7)"] .car-icon {
+    animation: carSelected 1.5s infinite alternate;
+    opacity: 0.9 !important;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4)) !important;
+}
+
+/* רכב בחניות פנויות - פחות מעומעם */
+.cp[style*="backgroundColor: #334155"] .car-icon {
+    color: rgba(255, 255, 255, 0.7);
+    opacity: 0.7;
+}
+
+/* רכב במקומות ריקים - פחות מעומעם */
+.empty-spot .car-icon {
+    color: rgba(255, 255, 255, 0.4);
+    opacity: 0.4;
+}
+
+/* אנימציות */
+@keyframes carPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes carSelected {
+    0% {
+        transform: scale(1) translateX(-2px);
+    }
+    100% {
+        transform: scale(1.2) translateX(2px);
+    }
+}
+
+/* התאמה למסכים קטנים */
+@media (max-width: 1200px) {
+    .car-icon {
+        width: 2rem !important;
+        height: 2rem !important;
+    }
+    
+    .spot-number {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .car-icon {
+        width: 1.8rem !important;
+        height: 1.8rem !important;
+    }
+    
+    .spot-number {
+        font-size: 0.7rem;
+    }
+}
+
+/* Empty Parking Spot */
+.empty-spot {
+    background-color: #1e293b;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* התאמת צבעים למקרא */
+.cp[style*="backgroundColor: white"] {
+    background-color: #334155 !important; /* התאמה ל-legend-available */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cp[style*="backgroundColor: red"] {
+    background-color: rgba(220, 38, 38, 0.7) !important; /* התאמה ל-legend-occupied */
+    border: 1px solid rgba(248, 113, 113, 0.3);
+    box-shadow: 0 0 15px rgba(220, 38, 38, 0.3);
+}
+
+.cp[style*="backgroundColor: yellow"] {
+    background-color: rgba(234, 179, 8, 0.7) !important; /* התאמה ל-legend-selected */
+    border: 1px solid rgba(253, 224, 71, 0.3);
+    box-shadow: 0 0 15px rgba(234, 179, 8, 0.3);
+    animation: pulse 1.5s infinite alternate;
+}
+
+.cp[style*="backgroundColor: rgb(158, 168, 166)"] {
+    background-color: rgba(14, 165, 233, 0.7) !important; /* התאמה ל-legend-current */
+    border: 1px solid rgba(125, 211, 252, 0.3);
+    box-shadow: 0 0 15px rgba(14, 165, 233, 0.3);
+    animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 10px rgba(234, 179, 8, 0.3);
+    }
+    100% {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(234, 179, 8, 0.5);
+    }
+}
+
+/* הסרת מפריד מעברים (לא נדרש עם הצמדת זוגות) */
+.aisle-separator {
+    display: none;
+}
+
+/* הוספת קו הפרפר בין שורות באותו זוג */
+.row-container:not(:last-child) {
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+}
+
+/* מרווח נוסף בצד שמאל עבור תוויות השורות */
+.carParkings {
+    margin-left: 50px;
+}
+
+/* Middle Section */
+.middle {
+    width: 95vw;
+    max-width: 1800px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 15px;
+}
+
+/* עדכון הדיב שמכיל את הכפתורים */
+.middle > div {
+    display: flex;
+    flex-direction: row; /* שינוי מ-column ל-row */
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* אפשרות לרדת שורה במסכים קטנים */
+    gap: 10px; /* רווח בין הכפתורים */
+}
+
+/* Control Buttons */
+.main button {
+    background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 24px;
+    margin: 0; /* הסרת המרווח מסביב לכפתורים */
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto; /* מניעת התרחבות הכפתורים */
+}
+
+.main button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+    background: linear-gradient(90deg, #4f8df9 0%, #2857e0 100%);
+}
+
+.main button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+}
+
+/* Button Shimmer Effect */
+.main button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+/* Status Messages */
+.status-indicator {
+    position: relative;
+    background-color: rgba(15, 23, 42, 0.8);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    margin: 10px 0;
+}
+
+.status-indicator.success {
+    background-color: rgba(16, 185, 129, 0.2);
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+.status-indicator.error {
+    background-color: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.status-indicator svg {
+    margin-left: 8px;
+}
+
+/* Legend */
+.parking-legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px 0;
+    background-color: rgba(15, 23, 42, 0.7);
+    padding: 10px 20px;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    color: white;
+    margin: 5px 10px;
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    margin-left: 8px;
+}
+.legend-available {
+    background-color: #334155;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.legend-occupied {
+    background-color: rgba(220, 38, 38, 0.7);
+    border: 1px solid rgba(248, 113, 113, 0.3);
+}
+
+.legend-selected {
+    background-color: rgba(234, 179, 8, 0.7);
+    border: 1px solid rgba(253, 224, 71, 0.3);
+}
+
+.legend-current {
+    background-color: rgba(14, 165, 233, 0.7);
+    border: 1px solid rgba(125, 211, 252, 0.3);
+}
+
+/* סגנון למיכל הלוגו */
+.premium-logo-container {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    display: flex;
+    align-items: center;
+    z-index: 10;
+}
+
+/* סגנון לתמונת הלוגו */
+.premium-logo-image {
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* סגנון לטקסט הלוגו */
+.premium-logo-text {
+    color: #3b82f6 !important;
+    font-weight: 700 !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.5px;
+    font-size: 1.25rem !important;
+    text-align: right;
+}
+
+/* עדכון ה-parking-header */
+.parking-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 95vw;
+    max-width: 1800px;
+    margin-bottom: 20px;
+    margin-top: 80px; /* הגדלת המרווח למעלה כדי לפנות מקום ללוגו */
+    position: relative;
+}
+
+.parking-title {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    z-index: 5;
+}
+
+.parking-title svg {
+    margin-left: 12px;
+    color: #3b82f6;
+}
+
+.parking-info {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.info-item {
+    background-color: rgba(15, 23, 42, 0.7);
+    padding: 10px 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.info-label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.2);
+    margin-bottom: 4px;
+}
+
+.info-value {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+}
+
+/* Column Numbers */
+.column-numbers {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr); /* 12 קבוצות של זוגות טורים */
+    width: 95vw;
+    max-width: 1800px;
+    gap: 8px;
+    padding: 0 30px;
+    margin-bottom: 5px;
+}
+
+.column-number-pair {
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+}
+
+.column-number {
+    flex: 1;
+    text-align: center;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Parking Entrance and Exit */
+.parking-entrance,
+.parking-exit {
+    position: absolute;
+    padding: 8px 12px;
+    background-color: rgba(15, 23, 42, 0.8);
+    color: white;
+    border-radius: 8px;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 10;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+}
+
+.parking-entrance {
+    top: 5px;
+    left: 5px;
+    color: #10b981;
+    z-index: 10;
+}
+
+.parking-entrance svg {
+    margin-right: 5px;
+}
+
+.parking-exit {
+    bottom: 5px;
+    right: 5px;
+    color: #ef4444;
+    z-index: 10;
+}
+
+.parking-exit svg {
+    margin-right: 5px;
+}
+
+/* Floor Indicator */
+.floor-indicator {
+    position: absolute;
+    top: 10px;
+    left: 10px; /* שינוי מ-right: 10px ל-left: 10px */
+    background-color: rgba(15, 23, 42, 0.8);
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 10;
+    font-size: 0.9rem;
+}
+
+/* Direction Arrows */
+.parking-directions {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.direction-arrow {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(255, 255, 255, 0.3)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l14 0'/%3E%3Cpath d='M15 16l4 -4'/%3E%3Cpath d='M15 8l4 4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.arrow-right {
+    top: 33%;
+    left: 10%;
+}
+
+.arrow-left {
+    top: 67%;
+    right: 10%;
+    transform: rotate(180deg);
+}
+
+/* Spot Number */
+.spot-number {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.9);
+    z-index: 2;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Loading Indicator */
+.loading-indicator {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(225, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+    margin-left: 10px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1800px) {
+    .carParkings, .column-numbers {
+        grid-template-columns: repeat(24, 1fr);
+    }
+}
+
+@media (max-width: 1600px) {
+    .carParkings, .column-numbers {
+        grid-template-columns: repeat(24, 1fr);
+        gap: 6px;
+    }
+    
+    .cp {
+        font-size: 0.65rem;
+    }
+    
+    .spot-number {
+        font-size: 0.65rem;
+    }
+}
+
+@media (max-width: 1400px) {
+    .carParkings, .column-numbers {
+        grid-template-columns: repeat(24, 1fr);
+        gap: 4px;
+        padding: 20px;
+    }
+    
+    .cp {
+        font-size: 0.6rem;
+    }
+    
+    .spot-number {
+        font-size: 0.6rem;
+    }
+    
+    .column-number {
+        font-size: 0.6rem;
+    }
+}
+
+@media (max-width: 1200px) {
+    .carParkings, .column-numbers {
+        grid-template-columns: repeat(24, 1fr);
+        gap: 3px;
+        padding: 15px;
+    }
+    
+    .cp {
+        font-size: 0.55rem;
+    }
+    
+    .spot-number {
+        font-size: 0.55rem;
+    }
+    
+    .parking-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .parking-info {
+        width: 100%;
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 992px) {
+    .carParkings, .column-numbers {
+        grid-template-columns: repeat(12, 1fr);
+        gap: 5px;
+    }
+    
+    .cp {
+        font-size: 0.65rem;
+    }
+    
+    .spot-number {
+        font-size: 0.65rem;
+    }
+    
+    .row-label:nth-of-type(odd) {
+        margin-top: 30px;
+    }
+    
+    .aisle-separator {
+        grid-column: span 12;
+    }
+}
+
+@media (max-width: 768px) {
+    .carParkings, .column-numbers {
+        grid-template-columns: repeat(8, 1fr);
+        gap: 5px;
+        padding: 10px;
+    }
+    
+    .cp {
+        font-size: 0.6rem;
+    }
+    
+    .spot-number {
+        font-size: 0.6rem;
+    }
+    
+    .aisle-separator {
+        grid-column: span 8;
+    }
+    
+    .parking-legend {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+    }
+    
+    .legend-item {
+        margin: 5px 0;
+    }
+    
+    .main button {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .carParkings, .column-numbers {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 4px;
+        padding: 8px;
+    }
+    
+    .cp {
+        font-size: 0.55rem;
+    }
+    
+    .spot-number {
+        font-size: 0.55rem;
+    }
+    
+    .aisle-separator {
+        grid-column: span 6;
+    }
+    
+    .parking-title {
+        font-size: 1.5rem;
+    }
+    
+    .infoinfo {
+        padding: 8px 12px;
+    }
+    
+    .info-value {
+        font-size: 1rem;
+    }
+    
+    .main button {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+        margin: 5px;
+    }
+}
+
+/* Animation for Selected Spots */
+@keyframes blink {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.cp[style*="backgroundColor: yellow"],
+.cp[style*="backgroundColor: rgb(158, 168, 166)"] {
+    animation: blink 1s infinite;
+}
+
+/* Hover Effects */
+.cp:hover .spot-number {
+    transform: translate(-50%, -50%) scale(1.2);
+    transition: transform 0.2s ease;
+}
+
+/* Tooltip for Parking Spots */
+.cp::after {
+    content: attr(data-status);
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(15, 23, 42, 0.9);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.cp:hover::after {
+    opacity: 1;
+    visibility: visible;
+    bottom: -25px;
+}
+
+/* Parking Spot Status Indicators */
+.cp[style*="backgroundColor: white"]::after {
+    content: "פנוי";
+}
+
+.cp[style*="backgroundColor: red"]::after {
+    content: "תפוס";
+}
+
+.cp[style*="backgroundColor: yellow"]::after {
+    content: "נבחר";
+}
+
+.cp[style*="backgroundColor: rgb(158, 168, 166)"]::after {
+    content: "הרכב שלך";
+}
+
+/* עדכון הגריד להצמדת זוגות שורות */
+.carParkings {
+    width: 95vw;
+    max-width: 1800px;
+    height: auto;
+    min-height: 70vh;
+    background-color: #1e293b;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* מרווח בין זוגות שורות - כאן יעבור המסלול */
+    padding: 30px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: visible;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 20px 0;
+}
+
+/* הסרת תווית שורה */
+.row-label {
+    display: none;
+}
+
+/* החזרת מספור העמודות */
+.column-numbers {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+    width: 95vw;
+    max-width: 1800px;
+    gap: 8px;
+    padding: 0 30px;
+    margin-bottom: 5px;
+}
+
+.column-number {
+    text-align: center;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* מסלול חיצים מהכניסה ליציאה */
+.arrow-path {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* חיצים במסלול */
+.path-arrow {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: rgba(59, 130, 246, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pulse-arrow 2s infinite;
+    z-index: 1;
+}
+
+.path-arrow svg {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 18px;
+}
+
+/* מיקום החיצים במסלול - בין זוגות שורות ולא על חניות */
+/* שורה ראשונה - מהכניסה ימינה */
+.path-arrow:nth-child(1) { top: 15px; left: 5%; }
+.path-arrow:nth-child(2) { top: 15px; left: 25%; }
+.path-arrow:nth-child(3) { top: 15px; left: 45%; }
+.path-arrow:nth-child(4) { top: 15px; left: 65%; }
+.path-arrow:nth-child(5) { top: 15px; left: 85%; }
+
+/* ירידה למטה בצד ימין */
+.path-arrow:nth-child(6) { top: 33%; left: 95%; transform: rotate(90deg); }
+
+/* שורה שנייה - משמאל לימין במרווח בין זוג ראשון לשני */
+.path-arrow:nth-child(7) { top: 33%; left: 85%; transform: rotate(180deg); }
+.path-arrow:nth-child(8) { top: 33%; left: 65%; transform: rotate(180deg); }
+.path-arrow:nth-child(9) { top: 33%; left: 45%; transform: rotate(180deg); }
+.path-arrow:nth-child(10) { top: 33%; left: 25%; transform: rotate(180deg); }
+.path-arrow:nth-child(11) { top: 33%; left: 5%; transform: rotate(180deg); }
+
+/* ירידה למטה בצד שמאל */
+.path-arrow:nth-child(12) { top: 66%; left: 5%; transform: rotate(90deg); }
+
+/* שורה שלישית - מימין לשמאל במרווח בין זוג שני לשלישי */
+.path-arrow:nth-child(13) { top: 66%; left: 25%; }
+.path-arrow:nth-child(14) { top: 66%; left: 45%; }
+.path-arrow:nth-child(15) { top: 66%; left: 65%; }
+.path-arrow:nth-child(16) { top: 66%; left: 85%; }
+.path-arrow:nth-child(17) { top: 66%; left: 10%; }
+.path-arrow:nth-child(18) { top: 96%; left: 25%; }
+.path-arrow:nth-child(19) { top: 96%; left: 45%; }
+.path-arrow:nth-child(20) { top: 96%; left: 65%; }
+.path-arrow:nth-child(21) { top: 96%; left: 85%; }
+.path-arrow:nth-child(22) { top: 96%; left: 10%; }
+/* ירידה למטה בצד ימין ליציאה - מסתיים בדיוק ביציאה */
+.path-arrow:nth-child(23) { top: 85%; left: 95%; transform: rotate(90deg); }
+.path-arrow:nth-child(24) { top: 95%; right: 10%; transform: rotate(180deg); }
+
+/* אנימציה לחיצים */
+@keyframes pulse-arrow {
+    0%, 100% {
+        opacity: 0.6;
+        transform: scale(1) rotate(var(--rotation, 0deg));
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2) rotate(var(--rotation, 0deg));
+    }
+}
+
+/* קו מקווקו המחבר בין החיצים */
+.arrow-path-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.horizontal-path {
+    position: absolute;
+    height: 4px;
+    background: repeating-linear-gradient(
+        90deg,
+        rgba(59, 130, 246, 0.4),
+        rgba(59, 130, 246, 0.4) 10px,
+        transparent 10px,
+        transparent 20px
+    );
+}
+
+.vertical-path {
+    position: absolute;
+    width: 4px;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(59, 130, 246, 0.4),
+        rgba(59, 130, 246, 0.4) 10px,
+        transparent 10px,
+        transparent 20px
+    );
+}
+
+/* מיקום הקווים המקווקווים - מותאם כך שלא יעלה על חניות */
+.path-top { top: 15px; left: 7%; width: 94% !important; height: 4px; }
+.path-right-1 { top: 15px; left: 99%; width: 4px; height: 96%; }
+.path-middle-1 { top: 33%; left: 2%; width: 96.5%; height: 4px; }
+.path-left { top: 15px; left: 1%; width: 4px; height: 96%; }
+.path-middle-2 { top: 66%; left: 1%; width: 96.5%; height: 4px; }
+.path-middle-3 { top: 97%; left: 1%; width: 96.5%; height: 4px; }
+/* .path-right-2 { top: 66%; left: 99%; width: 4px; height: 30%; } */
+.path-bottom { top: 95%; left: 85%; width: 10%; height: 4px; }
+
+/* התאמת צבעים למקרא - שימוש בצבע המוגדר בשורה 256 */
+.cp[style*="backgroundColor: white"] {
+    background-color: #334155 !important; /* צבע חניות פנויות */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.legend-available {
+    background-color: #334155;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* סגנון למסלול המודגש */
+.highlighted-path {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.path-highlight-point {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(16, 185, 129, 0.7);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+    animation: pulse-highlight 1s infinite alternate;
+}
+
+@keyframes pulse-highlight {
+    0% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+}
+
+/* הדגשת החניה המבוקשת */
+.cp.highlighted-spot {
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.8) !important;
+    z-index: 5;
+    animation: pulse-spot 1.5s infinite alternate;
+}
+
+@keyframes pulse-spot {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 15px rgba(16, 185, 129, 0.8);
+    }
+    100% {
+        transform: scale(1.05);
+        box-shadow: 0 0 25px rgba(16, 185, 129, 1);
+    }
+}
+
+/* סגנונות להדגשת מסלול - רק התוספות החדשות */
+.highlighted-path {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 20;
+}
+
+.path-highlight-line {
+    position: absolute;
+    background-color: rgba(16, 185, 129, 0.7);
+    z-index: 15;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
+.path-highlight-line.horizontal {
+    height: 5px;
+}
+
+.path-highlight-line.vertical {
+    width: 5px;
+}
+
+.path-highlight-point {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background-color: rgba(16, 185, 129, 0.9);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 16;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.7);
+    animation: pulse-highlight 1s infinite alternate;
+}
+
+.moving-car {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: rgba(16, 185, 129, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.7);
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+.highlighted-spot {
+    animation: pulse-spot 1s infinite alternate;
+    z-index: 5;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.8) !important;
+}
+
+@keyframes pulse-highlight {
+    0% {
+        transform: translate(-50%, -50%) scale(0.8);
+        box-shadow: 0 0 5px rgba(16, 185, 129, 0.7);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1.2);
+        box-shadow: 0 0 15px rgba(16, 185, 129, 0.9);
+    }
+}
+
+@keyframes pulse-spot {
+    0% {
+        box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 25px rgba(16, 185, 129, 1);
+    }
+}
