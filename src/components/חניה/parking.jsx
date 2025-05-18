@@ -7,8 +7,7 @@
   import { useNavigate } from "react-router-dom";
   import { getPriceThunk } from "../../redux/Thunks/getPriceThunk";
   import { getCarExists } from "../../redux/Thunks/getCarExists";
-  import { setEnter } from "../../redux/slices/parkingSlice";
-  import { Check, LocalParking, DirectionsCar, ExitToApp, Search, Payment, Info, ArrowForward, ArrowBack } from "@mui/icons-material";
+  import { Check, DirectionsCar, ExitToApp, Search, Payment, Info, ArrowForward } from "@mui/icons-material";
   import {
       Box,
       Button,
