@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginThunk } from "../../redux/Thunks/loginThunk";
 import { useDispatch, useSelector } from "react-redux";
 import {
     Box,
@@ -35,36 +34,29 @@ import {
     AccessTime,
     Notifications
 } from "@mui/icons-material";
-import { insertLicensePlate, insertPassword, insertUserName } from "../../redux/slices/driverSlice";
+import { insertUserName } from "../../redux/slices/driverSlice";
 import './login.css';
+import { isManagerThunk } from "../../redux/Thunks/isManagerThunk";
+import { loginThunk } from "../../redux/Thunks/loginThunk";
 
 export const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
-    const [lisencePlate, setLisencePlate] = useState("");
     const [activeTab, setActiveTab] = useState(0);
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("יש למלא את כל השדות");
     const [isLoading, setIsLoading] = useState(false);
-    const [managerPassword, setManagerPassword] = useState("");
-    const [confirmManagerPassword, setConfirmManagerPassword] = useState("");
-    const [managerPasswordError, setManagerPasswordError] = useState(false);
-    const [managerPasswordErrorMessage, setManagerPasswordErrorMessage] = useState("");
-    const [confirmPasswordError, setConfirmPasswordError] = useState(false);
-    const [confirmPasswordErrorMessage, setConfirmPasswordErrorMessage] = useState("");
 
     const exists = useSelector(state => state.driver.code);
     const isNew = useSelector(state => state.driver.isNew);
+    const isManager = useSelector(state => state.managers.isManager);
 
     useEffect(() => {
-        if (isNew) {
+        if (isNew == true) {
             navigate(`/logon`);
             dispatch(insertUserName(name));
-            dispatch(insertPassword(password));
-            dispatch(insertLicensePlate(lisencePlate));
         }
     }, [isNew]);
 
@@ -73,96 +65,32 @@ export const Login = () => {
     };
 
     const handleLogin = () => {
-        if (!name || !password || !lisencePlate) {
+
+        if (!name || !password) {
             setErrorMessage("יש למלא את כל השדות");
             setShowError(true);
             return;
         }
 
         setIsLoading(true);
-
-        // Simulate loading for better UX
-        setTimeout(() => {
-            dispatch(loginThunk({ name, password, lisencePlate }));
-            setIsLoading(false);
-        }, 800);
+        dispatch(isManagerThunk({ name, code: password }));
+        setIsLoading(false);
     };
 
     const handleCloseError = () => {
         setShowError(false);
     };
+    useEffect(() => {
+        if (exists)
+            navigate(`/parking`);
+    }, [exists]);
 
-    const validateManagerPassword = (password) => {
-        if (!password) {
-            setManagerPasswordError(true);
-            setManagerPasswordErrorMessage("יש להזין סיסמת מנהל");
-            return false;
-        }
-        
-        if (password.length < 8) {
-            setManagerPasswordError(true);
-            setManagerPasswordErrorMessage("סיסמת מנהל חייבת להכיל לפחות 8 תווים");
-            return false;
-        }
-        
-        setManagerPasswordError(false);
-        setManagerPasswordErrorMessage("");
-        
-        // אם יש כבר אימות סיסמה, בדוק התאמה
-        if (confirmManagerPassword) {
-            validateConfirmPassword(password, confirmManagerPassword);
-        }
-        
-        return true;
-    };
-
-    const validateConfirmPassword = (password, confirmPassword) => {
-        if (!confirmPassword) {
-            setConfirmPasswordError(true);
-            setConfirmPasswordErrorMessage("יש להזין אימות סיסמה");
-            return false;
-        }
-        
-        if (password !== confirmPassword) {
-            setConfirmPasswordError(true);
-            setConfirmPasswordErrorMessage("סיסמאות המנהל אינן תואמות");
-            return false;
-        }
-        
-        setConfirmPasswordError(false);
-        setConfirmPasswordErrorMessage("");
-        return true;
-    };
-
-    const handleManagerPasswordChange = (e) => {
-        const newPassword = e.target.value;
-        setManagerPassword(newPassword);
-        validateManagerPassword(newPassword);
-    };
-
-    const handleConfirmPasswordChange = (e) => {
-        const newConfirmPassword = e.target.value;
-        setConfirmManagerPassword(newConfirmPassword);
-        validateConfirmPassword(managerPassword, newConfirmPassword);
-    };
-
-    const validateManagerPasswords = () => {
-        const isPasswordValid = validateManagerPassword(managerPassword);
-        const isConfirmValid = validateConfirmPassword(managerPassword, confirmManagerPassword);
-        
-        if (isPasswordValid && isConfirmValid) {
-            // כאן אפשר להוסיף לוגיקה של כניסת מנהל
-            alert("פרטי מנהל תקינים!");
-            return true;
-        }
-        
-        return false;
-    };
-
-    // Redirect if user exists
-    if (exists) {
-        navigate(`/login/confirm`);
-    }
+    useEffect(() => {
+        if (isManager)
+            navigate(`/manager`);
+        else if (isManager === false)
+            dispatch(loginThunk({ name, password }));
+    }, [isManager]);
 
     return (
         <div className="premium-login-container">
@@ -288,7 +216,7 @@ export const Login = () => {
                                     >
                                         <Tab label="התחברות" className="premium-tab" />
                                         <Tab label="מידע" className="premium-tab" />
-                                        <Tab label="כניסת מנהל" className="premium-tab" />
+                                        {/* <Tab label="כניסת מנהל" className="premium-tab" /> */}
                                     </Tabs>
 
                                     {activeTab === 0 && (
@@ -342,27 +270,6 @@ export const Login = () => {
                                                         ),
                                                     }}
                                                 />
-
-                                                <TextField
-                                                    fullWidth
-                                                    label="לוחית רישוי"
-                                                    variant="outlined"
-                                                    margin="normal"
-                                                    required
-                                                    className="premium-input"
-                                                    value={lisencePlate}
-                                                    onChange={(e) => setLisencePlate(e.target.value)}
-                                                    InputProps={{
-
-
-                                                        endAdornment: (
-                                                            <InputAdornment position="end">
-                                                                <DirectionsCar className="input-icon" />
-                                                            </InputAdornment>
-                                                        ),
-                                                    }}
-                                                />
-
                                                 <Button
                                                     variant="contained"
                                                     fullWidth
@@ -460,84 +367,6 @@ export const Login = () => {
                                         </Fade>
                                     )}
 
-                                    {activeTab === 2 && (
-                                        <Fade in={activeTab === 2} timeout={500}>
-                                            <Box className="premium-login-form">
-                                                <Typography variant="h4" className="premium-form-title">
-                                                    כניסת מנהל
-                                                </Typography>
-
-                                                <Typography variant="body2" className="premium-form-subtitle">
-                                                    הזן את פרטי ההתחברות שלך כמנהל מערכת
-                                                </Typography>
-
-                                                
-
-                                                <TextField
-                                                    fullWidth
-                                                    label="סיסמת מנהל"
-                                                    variant="outlined"
-                                                    type="password"
-                                                    margin="normal"
-                                                    required
-                                                    className="premium-input"
-                                                    value={managerPassword}
-                                                    onChange={handleManagerPasswordChange}
-                                                    error={managerPasswordError}
-                                                    helperText={managerPasswordError ? managerPasswordErrorMessage : ""}
-                                                    InputProps={{
-                                                        endAdornment: (
-                                                            <InputAdornment position="end">
-                                                                <Lock className="input-icon" />
-                                                            </InputAdornment>
-                                                        ),
-                                                    }}
-                                                />
-            
-                                                <TextField
-                                                    fullWidth
-                                                    label="אימות סיסמת מנהל"
-                                                    variant="outlined"
-                                                    type="password"
-                                                    margin="normal"
-                                                    required
-                                                    className="premium-input"
-                                                    value={confirmManagerPassword}
-                                                    onChange={handleConfirmPasswordChange}
-                                                    error={confirmPasswordError}
-                                                    helperText={confirmPasswordError ? confirmPasswordErrorMessage : ""}
-                                                    InputProps={{
-                                                        endAdornment: (
-                                                            <InputAdornment position="end">
-                                                                <Lock className="input-icon" />
-                                                            </InputAdornment>
-                                                        ),
-                                                    }}
-                                                />
-
-                                                <Button
-                                                    variant="contained"
-                                                    fullWidth
-                                                    size="large"
-                                                    className="premium-login-button"
-                                                    style={{ marginTop: '20px' }}
-                                                    onClick={validateManagerPasswords}
-                                                >
-                                                    כניסה כמנהל
-                                                </Button>
-            
-                                                {managerPasswordError && (
-                                                    <Typography 
-                                                        variant="body2" 
-                                                        color="error" 
-                                                        style={{ marginTop: '10px', textAlign: 'center' }}
-                                                    >
-                                                        {managerPasswordErrorMessage}
-                                                    </Typography>
-                                                )}
-                                            </Box>
-                                        </Fade>
-                                    )}
                                 </Grid>
                             </Grid>
                         </CardContent>
@@ -564,6 +393,3 @@ export const Login = () => {
         </div>
     );
 };
-
-
-
