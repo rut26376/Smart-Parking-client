@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { addDriverThunk } from "../../redux/Thunks/addDriverThunk";
 import * as React from 'react';
 import './logon.css'; // שינוי: קישור לקובץ CSS החדש
-import { Box, Button, CircularProgress, TextField, Typography, Container, Card, CardContent, Grid, Stepper, Step, StepLabel , Alert , Snackbar } from "@mui/material";
-import { Person, Phone, DirectionsCar, Lock, Email  } from "@mui/icons-material";
-import { insertLicensePlate, insertPassword, insertUserName, setIsNew } from "../../redux/slices/driverSlice";
+import { Box, Button, CircularProgress, TextField, Typography, Container, Card, CardContent, Grid, Stepper, Step, StepLabel, Alert, Snackbar } from "@mui/material";
+import { Person, Phone, DirectionsCar, Email } from "@mui/icons-material";
+import { insertUserName, setIsNew } from "../../redux/slices/driverSlice";
 import { useNavigate } from "react-router-dom";
 
 export const Logon = () => {
@@ -13,17 +13,15 @@ export const Logon = () => {
     const navigate = useNavigate()
     const newCode = useSelector(state => state.driver.code)
     const stateUserName = useSelector(state => state.driver.userName)
-    const statePassword = useSelector(state => state.driver.password)
     const stateLicensePlate = useSelector(state => state.driver.licensePlate)
-    const [driver, setDriver] = useState({ name: "", phoneNumber: "", userName: stateUserName, password: statePassword, code: "0" })
+    const [driver, setDriver] = useState({ name: "", phoneNumber: "", userName: stateUserName, code: "0" })
     const [loading, setLoading] = React.useState(false);
-    const [licenseP, setLicenseP] = useState(stateLicensePlate)
+    const [licenseP] = useState(stateLicensePlate)
     const [activeStep, setActiveStep] = useState(0);
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
-    // הגדרת שלבי ההרשמה
-    const steps = ['פרטים אישיים', 'פרטי רכב', 'אישור'];
+    const steps = ['פרטים אישיים ורכב', 'אישור'];
 
     React.useEffect(() => {
         const timeout = setTimeout(() => {
@@ -33,12 +31,12 @@ export const Logon = () => {
             clearTimeout(timeout);
         }
     }, [newCode]);
-    
+
     const checkDetails = () => {
         setLoading(true);
         let flag = true;
         console.log(driver, licenseP);
-        
+
         if (driver.name.length <= 1 || driver.name.length > 15) {
             flag = false;
             setErrorMessage("שם הנהג חייב להיות בין 2 ל-15 תווים");
@@ -54,22 +52,10 @@ export const Logon = () => {
             setErrorMessage("שם המשתמש חייב להיות עד 20 תווים");
             setShowError(true);
         }
-        else if (driver.password.length > 10 && driver.password.length !== 0) {
-            flag = false;
-            setErrorMessage("הסיסמה חייבת להיות עד 10 תווים");
-            setShowError(true);
-        }
-        else if (licenseP.length < 7 || licenseP.length > 9) {
-            flag = false;
-            setErrorMessage("מספר לוחית הרישוי אינו תקין");
-            setShowError(true);
-        }
-        
         if (flag) {
-            dispatch(addDriverThunk({driver, licensePlate:licenseP}))
+            dispatch(addDriverThunk({ driver }))
             dispatch(insertUserName(driver.userName))
-            dispatch(insertLicensePlate(licenseP))
-            dispatch(insertPassword(driver.password))
+
         } else {
             setLoading(false);
         }
@@ -199,7 +185,7 @@ export const Logon = () => {
                                         {activeStep === 0 && (
                                             <Box>
                                                 <Typography variant="h6" className="premium-step-title">
-                                                    פרטים אישיים
+                                                    פרטים אישיים ומשתמש
                                                 </Typography>
 
                                                 <TextField
@@ -234,14 +220,6 @@ export const Logon = () => {
                                                         ),
                                                     }}
                                                 />
-                                            </Box>
-                                        )}
-
-                                        {activeStep === 1 && (
-                                            <Box>
-                                                <Typography variant="h6" className="premium-step-title">
-                                                    פרטי משתמש ורכב
-                                                </Typography>
 
                                                 <TextField
                                                     fullWidth
@@ -258,43 +236,10 @@ export const Logon = () => {
                                                         ),
                                                     }}
                                                 />
-
-                                                <TextField
-                                                    fullWidth
-                                                    label="סיסמת משתמש"
-                                                    variant="outlined"
-                                                    type="password"
-                                                    margin="normal"
-                                                    required
-                                                    className="premium-input"
-                                                    defaultValue={statePassword}
-                                                    onChange={(e) => setDriver({ ...driver, password: e.target.value })}
-                                                    InputProps={{
-                                                        startAdornment: (
-                                                            <Lock className="input-icon" style={{ marginLeft: '8px' }} />
-                                                        ),
-                                                    }}
-                                                />
-
-                                                <TextField
-                                                    fullWidth
-                                                    label="מספר רישוי"
-                                                    variant="outlined"
-                                                    margin="normal"
-                                                    required
-                                                    className="premium-input"
-                                                    defaultValue={stateLicensePlate}
-                                                    onChange={(e) => setLicenseP(e.target.value)}
-                                                    InputProps={{
-                                                        startAdornment: (
-                                                            <DirectionsCar className="input-icon" style={{ marginLeft: '8px' }} />
-                                                        ),
-                                                    }}
-                                                />
                                             </Box>
                                         )}
 
-                                        {activeStep === 2 && (
+                                        {activeStep === 1 && (
                                             <Box>
                                                 <Typography variant="h6" className="premium-step-title">
                                                     אישור פרטים
@@ -337,17 +282,6 @@ export const Logon = () => {
                                                             <Grid item xs={6}>
                                                                 <Typography variant="body2" className="premium-summary-value">
                                                                     {driver.userName}
-                                                                    </Typography>
-                                                            </Grid>
-
-                                                            <Grid item xs={6}>
-                                                                <Typography variant="body2" className="premium-summary-label">
-                                                                    מספר רישוי:
-                                                                </Typography>
-                                                            </Grid>
-                                                            <Grid item xs={6}>
-                                                                <Typography variant="body2" className="premium-summary-value">
-                                                                    {licenseP}
                                                                 </Typography>
                                                             </Grid>
                                                         </Grid>
@@ -355,7 +289,7 @@ export const Logon = () => {
                                                 </Card>
 
                                                 <Typography variant="body2" className="premium-info-text">
-                                                    לחץ על "סיום" כדי להשלים את תהליך ההרשמה. קוד אימות יישלח לטלפון שלך.
+                                                    לחץ על "סיום" כדי להשלים את תהליך ההרשמה. סיסמא תשלח לטלפון שלך.
                                                 </Typography>
                                             </Box>
                                         )}
@@ -363,17 +297,17 @@ export const Logon = () => {
                                         {newCode && (
                                             <Box className="premium-info-box">
                                                 <Typography variant="subtitle1" gutterBottom>
-                                                    קוד האימות שלך הוא:
-                                                </Typography>
+                                                    הסיסמא שלך היא:                                                </Typography>
                                                 <Typography variant="h5" align="center" style={{ fontWeight: 'bold', margin: '16px 0' }}>
                                                     {newCode}
                                                 </Typography>
-                                                <Button 
-                                                    variant="contained" 
-                                                    color="primary" 
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
                                                     fullWidth
                                                     className="premium-next-button"
                                                     onClick={() => navigate(`/parking`)}
+                                                    style={{ overflow: 'hidden' }}
                                                 >
                                                     לאישור והמשך
                                                 </Button>
@@ -415,9 +349,10 @@ export const Logon = () => {
                                                 variant="outlined"
                                                 fullWidth
                                                 className="premium-register-button"
-                                                onClick={() => {  
-                                                    dispatch(setIsNew(false)) 
-                                                    ; navigate('/login')}}
+                                                onClick={() => {
+                                                    dispatch(setIsNew(false))
+                                                        ; navigate('/')
+                                                }}
                                             >
                                                 התחברות למערכת
                                             </Button>
@@ -449,5 +384,3 @@ export const Logon = () => {
         </div>
     );
 };
-
-
