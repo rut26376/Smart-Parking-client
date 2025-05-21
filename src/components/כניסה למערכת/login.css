@@ -35,7 +35,6 @@
   background: radial-gradient(circle, #3b82f6 0%, #1d4ed8 100%);
   top: -200px;
   right: -100px;
-  animation: float 15s ease-in-out infinite alternate;
 }
  
 .shape-2 {
@@ -44,7 +43,6 @@
   background: radial-gradient(circle, #2563eb 0%, #1e40af 100%);
   bottom: -300px;
   left: -200px;
-  animation: float 20s ease-in-out infinite alternate-reverse;
 }
  
 .shape-3 {
@@ -53,7 +51,6 @@
   background: radial-gradient(circle, #60a5fa 0%, #3b82f6 100%);
   top: 40%;
   right: 60%;
-  animation: float 18s ease-in-out infinite alternate;
 }
  
 .shape-4 {
@@ -62,7 +59,6 @@
   background: radial-gradient(circle, #93c5fd 0%, #60a5fa 100%);
   top: 20%;
   left: 20%;
-  animation: float 12s ease-in-out infinite alternate-reverse;
 }
  
 .shape-5 {
@@ -71,19 +67,6 @@
   background: radial-gradient(circle, #1e40af 0%, #1e3a8a 100%);
   bottom: 10%;
   right: 10%;
-  animation: float 25s ease-in-out infinite alternate;
-}
- 
-@keyframes float {
-  0% {
-    transform: translateY(0) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-20px) rotate(5deg);
-  }
-  100% {
-    transform: translateY(20px) rotate(-5deg);
-  }
 }
  
 /* App Bar */
@@ -113,15 +96,6 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-right: 10px; /* הוספת מרווח */
-}
- 
-.back-button {
-  margin-right: -8px;
-  transition: transform 0.2s ease;
-}
- 
-.back-button:hover {
-  transform: translateX(-4px);
 }
  
 .version-chip {
@@ -201,10 +175,6 @@
  transition: all 0.3s ease; /* אנימציה חלקה */
 }
 
-
-
-/* הוסף את הקוד הזה לקובץ ה-CSS שלך (login.css) */
-
 .premium-brand-name {
  font-size: 2.3rem !important;
  font-weight:700 !important ;
@@ -218,14 +188,6 @@
 .brand-logo-icon {
  display: inline-flex;
  vertical-align: middle;
-}
-
-.premium-avatar {
-  width: 48px !important;
-  height: 48px !important;
-  margin-left: 12px;
-  background-color: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
  
 .premium-welcome-text {
@@ -359,8 +321,6 @@
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
  
-/* שיפור מראה המסגרת והכיתוב */
-
 /* התאמת מיקום הכיתוב לאחר הלחיצה לרווח המקורי במסגרת */
 
 /* איפוס הגדרות קודמות */
@@ -371,84 +331,93 @@
  margin-right: unset;
  margin-left: unset;
 }
-
 /* הגדרת מיקום הכותרת במצב רגיל (לפני לחיצה) */
 .premium-input .MuiInputLabel-root {
- transform: translate(14px, 16px) scale(1) !important;
-}
+  transform: translate(14px, 16px) scale(1) !important;
+ }
+ 
+ /* הגדרת מיקום הכותרת במצב מתכווץ (אחרי לחיצה) - בדיוק באותו מקום אופקי */
+ .premium-input .MuiInputLabel-shrink {
+  transform: translate(14px, -6px) scale(0.75) !important;
+  background-color: white !important;
+  padding: 0 !important; /* ללא רווח נוסף */
+ }
+ 
+ /* הזזת הטקסט המוזן ימינה כדי שלא יוסתר על ידי האייקונים */
+ .premium-input .MuiInputBase-input {
+  padding-right: 40px !important; /* מרווח גדול יותר מימין לטקסט המוזן */
+  text-align: right !important; /* יישור טקסט לימין */
+ }
+ 
+ /* הזזת האייקונים שמאלה */
+ .premium-input .MuiInputAdornment-root {
+  margin-left: 8px !important; /* מרווח משמאל לאייקון */
+  margin-right: -30px !important; /* הזזת האייקון שמאלה */
+ }
+ 
+ /* הוספת אפקט זוהר שנע על הכפתור */
+ .premium-login-button {
+   background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%);
+   position: relative;
+   overflow: hidden;
+ }
+ 
+ .premium-login-button::before {
+   content: "";
+   position: absolute;
+   top: 0;
+   left: -100%;
+   width: 100%;
+   height: 100%;
+   background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%);
+   animation: buttonShine 3s infinite;
+   pointer-events: none; /* כדי שהאפקט לא יפריע ללחיצות */
+ }
+ 
+ @keyframes buttonShine {
+   0% {
+     left: -100%;
+   }
+   20% {
+     left: 100%;
+   }
+   100% {
+     left: 100%;
+   }
+ }
+ 
+ /* שיפור אפקט מעבר בריחוף - שומר על הצבע הקיים */
+ .premium-login-button:hover {
+   transform: translateY(-2px);
+   box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+   transition: all 0.3s ease;
+ }
+ 
+ /* הוספת אפקט לחיצה */
+ .premium-login-button:active {
+   transform: translateY(1px);
+   box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+   transition: all 0.1s ease;
+ }
+ 
+ /* סגנונות לכפתור הרשמה ואזור הרישום */
+ .premium-form-footer {
+   margin-top: 20px;
+   text-align: center;
+ }
+ 
+ .premium-register-text {
+   margin-bottom: 10px;
+   color: #64748b;
+ }
+ 
+ .premium-register-button {
+   margin-top: 10px;
+ }
+ 
+ /* סגנונות לחלוקה בין אפשרויות כניסה */
+ .premium-divider {
+   margin: 24px 0;
+ }
+ 
 
-/* הגדרת מיקום הכותרת במצב מתכווץ (אחרי לחיצה) - בדיוק באותו מקום אופקי */
-.premium-input .MuiInputLabel-shrink {
- transform: translate(14px, -6px) scale(0.75) !important;
- background-color: white !important;
- padding: 0 !important; /* ללא רווח נוסף */
-}
-
-
-/* התאמת הרווח */
-/* תיקון ממוקד לבעיית הסתרת התוכן על ידי האייקונים */
-
-/* הזזת הטקסט המוזן ימינה כדי שלא יוסתר על ידי האייקונים */
-.premium-input .MuiInputBase-input {
- padding-right: 40px !important; /* מרווח גדול יותר מימין לטקסט המוזן */
- text-align: right !important; /* יישור טקסט לימין */
-}
-
-/* הזזת האייקונים שמאלה */
-.premium-input .MuiInputAdornment-root {
- margin-left: 8px !important; /* מרווח משמאל לאייקון */
- margin-right: -30px !important; /* הזזת האייקון שמאלה */
-}
-
-/* הוספת אפקטים לכפתור הכניסה למערכת בדומה לכפתור "הרשמה עכשיו" */
-
-/* הוספת אפקט זוהר שנע על הכפתור */
-.premium-login-button {
-  background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%);
-  position: relative;
-  overflow: hidden;
-}
-
-.premium-login-button::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  /* background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.2) 50%,
-    rgba(255, 255, 255, 0) 100%
-  ); */
-  background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%);
-  animation: buttonShine 3s infinite;
-  pointer-events: none; /* כדי שהאפקט לא יפריע ללחיצות */
-}
-
-@keyframes buttonShine {
-  0% {
-    left: -100%;
-  }
-  20% {
-    left: 100%;
-  }
-  100% {
-    left: 100%;
-  }
-}
-
-/* שיפור אפקט מעבר בריחוף - שומר על הצבע הקיים */
-.premium-login-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
-  transition: all 0.3s ease;
-}
-
-/* הוספת אפקט לחיצה */
-.premium-login-button:active {
-  transform: translateY(1px);
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
-  transition: all 0.1s ease;
-}
