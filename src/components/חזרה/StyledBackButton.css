@@ -1,0 +1,160 @@
+/* עיצוב כפתור החזרה בהתאם לעיצוב של parking.css */
+.styled-back-button {
+  background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 24px;
+  margin: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex: 0 0 auto;
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+}
+
+.styled-back-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+  background: linear-gradient(90deg, #4f8df9 0%, #2857e0 100%);
+}
+
+.styled-back-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+}
+
+/* אפקט הברק (Shimmer Effect) */
+.styled-back-button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* עיצוב האייקון */
+.back-button-icon {
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+/* עיצוב הטקסט */
+.back-button-text {
+  direction: rtl;
+  z-index: 1;
+}
+
+/* התאמה למסכים קטנים */
+@media (max-width: 768px) {
+  .styled-back-button {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    margin: 8px;
+  }
+  
+  .back-button-icon {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .styled-back-button {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    margin: 5px;
+  }
+  
+  .back-button-icon {
+    font-size: 1rem;
+  }
+}
+
+/* וריאציות נוספות של הכפתור */
+.styled-back-button.secondary {
+  background: linear-gradient(90deg, #6c757d 0%, #495057 100%);
+  box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+}
+
+.styled-back-button.secondary:hover {
+  background: linear-gradient(90deg, #7c858d 0%, #596167 100%);
+  box-shadow: 0 6px 16px rgba(108, 117, 125, 0.4);
+}
+
+.styled-back-button.success {
+  background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.styled-back-button.success:hover {
+  background: linear-gradient(90deg, #34d399 0%, #10b981 100%);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+}
+
+.styled-back-button.danger {
+  background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.styled-back-button.danger:hover {
+  background: linear-gradient(90deg, #f87171 0%, #ef4444 100%);
+  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
+}
+
+/* כפתור קטן */
+.styled-back-button.small {
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  border-radius: 8px;
+}
+
+/* כפתור גדול */
+.styled-back-button.large {
+  padding: 16px 32px;
+  font-size: 1.125rem;
+  border-radius: 12px;
+}
+
+/* כפתור עם אייקון בלבד */
+.styled-back-button.icon-only {
+  padding: 12px;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+}
+
+.styled-back-button.icon-only .back-button-text {
+  display: none;
+}
+
+.styled-back-button.icon-only .back-button-icon {
+  font-size: 1.5rem;
+}

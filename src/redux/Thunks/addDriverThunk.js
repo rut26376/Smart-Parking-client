@@ -6,10 +6,11 @@ export const addDriverThunk = createAsyncThunk(
     'logonThunk',
     // פונקציה להפעלה 
 
-    async ( {driver,licensePlate} ) => {
-console.log(driver,"driver",licensePlate);
+    async ( {driver} ) => {
+     
+console.log(driver,"driver" );
 
-        const response = await fetch(`https://localhost:7164/api/Driver/AddDriver/${licensePlate}`, {
+        const response = await fetch(`https://localhost:7164/api/Driver/AddDriver`, {
             method: 'POST',
             body: JSON.stringify(driver),
             headers: {

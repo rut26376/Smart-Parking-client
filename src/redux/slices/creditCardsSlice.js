@@ -26,7 +26,7 @@ export const CreditCardsSlice = createSlice({
     initialState: INITIAL_STATE_CARDS,
     reducers: {
         changeCcDetails: (state, action) => { 
-           debugger
+         
             state.lastCreditCards = state.creditCards.find(c=>c.code == action.payload);
         }
     },

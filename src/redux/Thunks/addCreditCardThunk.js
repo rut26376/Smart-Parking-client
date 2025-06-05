@@ -7,7 +7,7 @@ export const addCreditCardThunk = createAsyncThunk(
     // פונקציה להפעלה 
 
     async (creditCard) => {
-        debugger
+        
         console.log(creditCard, "creditCard");
         const card = {
             creditCardNum: creditCard.creditCardNum,

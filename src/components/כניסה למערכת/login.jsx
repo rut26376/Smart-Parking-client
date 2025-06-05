@@ -51,9 +51,10 @@ export const Login = () => {
 
     const exists = useSelector(state => state.driver.code);
     const isNew = useSelector(state => state.driver.isNew);
-    const isManager = useSelector(state => state.managers.isManager);
+    const isManager = useSelector(state => state.manager.isManager);
 
     useEffect(() => {
+
         if (isNew == true) {
             navigate(`/logon`);
             dispatch(insertUserName(name));
@@ -254,7 +255,7 @@ export const Login = () => {
                                                     fullWidth
                                                     label="סיסמה"
                                                     variant="outlined"
-                                                    type="text"
+                                                    type="password"
                                                     margin="normal"
                                                     required
                                                     className="premium-input"

@@ -1,0 +1,43 @@
+.not-found-container {
+    direction: rtl;
+    background-color: #f8fafc;
+  }
+  
+  .error-code {
+    font-size: 120px;
+    font-weight: bold;
+    color: #0ea5e9;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  
+  .error-code:after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, #0ea5e9, #0369a1);
+    border-radius: 2px;
+  }
+  
+  .buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  @media (max-width: 600px) {
+    .error-code {
+      font-size: 80px;
+    }
+    
+    .buttons-container {
+      flex-direction: column;
+    }
+  }
+  

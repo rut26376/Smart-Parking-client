@@ -236,14 +236,14 @@
     box-shadow: none; /* הסרת הצל */
 }
 
-.cp[style*="backgroundColor: rgb(158, 168, 166)"] {
+/* .cp[style*="backgroundColor: rgb(158, 168, 166)"] {
     background-color: rgba(14, 165, 233, 0.7) !important; /* צבע הרכב שלך */
+ 
 
 
-
-    border: 0; /* הסרת הגבול */
-    box-shadow: none; /* הסרת הצל */
-}
+      /*border: 0; הסרת הגבול */
+    /* box-shadow: none;  הסרת הצל */
+/* } */
 
 /* עדכון סגנון מספר החניה */
 .spot-number {
@@ -293,12 +293,12 @@
 }
 
 /* אנימציה לאייקון הרכב בחניה נבחרת או הרכב שלך */
-.cp[style*="backgroundColor: yellow"] .car-icon,
+/* .cp[style*="backgroundColor: yellow"] .car-icon,
 .cp[style*="backgroundColor: rgba(14, 165, 233, 0.7)"] .car-icon {
     animation: carSelected 1.5s infinite alternate;
     opacity: 0.9 !important;
     filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4)) !important;
-}
+} */
 
 /* רכב בחניות פנויות - פחות מעומעם */
 .cp[style*="backgroundColor: #334155"] .car-icon {
@@ -380,12 +380,12 @@
     animation: pulse 1.5s infinite alternate;
 }
 
-.cp[style*="backgroundColor: rgb(158, 168, 166)"] {
-    background-color: rgba(14, 165, 233, 0.7) !important; /* התאמה ל-legend-current */
+/* .cp[style*="backgroundColor: rgb(158, 168, 166)"] {
+    background-color: rgba(14, 165, 233, 0.7) !important; /* התאמה ל-legend-current 
     border: 1px solid rgba(125, 211, 252, 0.3);
     box-shadow: 0 0 15px rgba(14, 165, 233, 0.3);
     animation: pulse 1.5s infinite alternate;
-}
+} */
 
 @keyframes pulse {
     0% {
@@ -569,10 +569,10 @@
     border: 1px solid rgba(253, 224, 71, 0.3);
 }
 
-.legend-current {
+/* .legend-current {
     background-color: rgba(14, 165, 233, 0.7);
     border: 1px solid rgba(125, 211, 252, 0.3);
-}
+} */
 
 /* סגנון למיכל הלוגו */
 .premium-logo-container {
@@ -1337,3 +1337,32 @@
         box-shadow: 0 0 25px rgba(16, 185, 129, 1);
     }
 }
+
+/* אנימציית הבהוב בגווני צהוב בהיר לחניה נבחרת - היבהוב חד יותר */
+@keyframes yellowPulseAnimation {
+    0% { background-color: #fef08a; }   /* צהוב בהיר מאוד */
+    20% { background-color: #fde047; }  /* צהוב בהיר */
+    40% { background-color: #facc15; }  /* צהוב */
+    60% { background-color: #fde047; }  /* צהוב בהיר */
+    80% { background-color: #fef08a; }  /* צהוב בהיר מאוד */
+    100% { background-color: #fef9c3; } /* צהוב בהיר מאוד עדין */
+}
+
+.yellow-pulse-animation {
+    animation: yellowPulseAnimation 1s infinite;  /* מהירות מוגברת - 1 שניה במקום 2 */
+    box-shadow: 0 0 15px rgba(250, 204, 21, 0.7) !important; /* צל בהיר יותר */
+    z-index: 5;
+    position: relative;
+    border: 2px solid #fef08a !important; /* גבול צהוב בהיר */
+}
+.premium-input{
+    background-color: white;
+    border-radius: 11px;
+}
+/* הגדלת האפקט בעת מעבר עכבר */
+/* .yellow-pulse-animation:hover {
+    animation: yellowPulseAnimation 0.6s infinite; /* היבהוב מהיר יותר בעת מעבר עכבר 
+    box-shadow: 0 0 25px rgba(250, 204, 21, 0.9) !important; /* צל חזק יותר 
+    transform: scale(1.08);
+    transition: transform 0.2s ease;
+} */

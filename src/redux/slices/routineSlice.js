@@ -14,7 +14,9 @@ export const RoutineSlice = createSlice({
     name: 'routine',
     initialState: INITIAL_STATE_ROUTINE,
     reducers: {
-
+setPrice:(state,action)=>{
+    state.price=action.payload;
+}
     },
     extraReducers: (builder) => {
         builder.addCase(addRoutineThunk.pending, (state, action) => {
@@ -45,3 +47,4 @@ export const RoutineSlice = createSlice({
         
     }
 })
+export const {setPrice}=RoutineSlice.actions;

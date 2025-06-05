@@ -9,20 +9,24 @@ import { ReactComponent as MastercardLogo } from './cardLogos/mastercard.svg';
 import { ReactComponent as VisaLogo } from './cardLogos/visa.svg';
 import { ReactComponent as AmexLogo } from './cardLogos/amex.svg';
 import { CreditCard, Receipt, Payment, CheckCircle, Lock, Error, Warning } from '@mui/icons-material'
+import { Button } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+import { setPrice } from '../../redux/slices/routineSlice'
 
 
 export const Paying = () => {
   const dispatch = useDispatch()
+  const navigator = useNavigate()
   const sum = useSelector(state => state.routine.price)
   const [numOfPayments, setNumOfPayments] = useState(1)
   const [flag, setFlag] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
   const [paymentComplete, setPaymentComplete] = useState(false)
   const cards = useSelector(state => state.cards.creditCards)
-  const licensePlate = useSelector(state => state.driver.licensePlate)
   const driverCode = useSelector(state => state.driver.code)
   const lastCreditCards = useSelector(state => state.cards.lastCreditCards)
   const [activeCardType, setActiveCardType] = useState(null)
+  const licensePlate = useSelector(state => state.payment.licensePlate)
   const [blPayment, setBlPeyment] = useState({
     creditCardCode: 0,
     sum: 0,
@@ -315,7 +319,7 @@ export const Paying = () => {
 
   // פונקציית תשלום משופרת
   const pay = () => {
-    debugger
+    
     // בדיקת תקינות כל השדות
     const finalValidation = {
       cardNumber: validateCardNumber(blCreditCards.creditCardNum),
@@ -383,8 +387,8 @@ export const Paying = () => {
       <div className="premium-payment-background">
         <div className="premium-payment-shape payment-shape-1"></div>
         <div className="premium-payment-shape payment-shape-2"></div>
-      </div>
 
+      </div>
       <div className='inputsPaying'>
         {!paymentComplete ? (
           <>

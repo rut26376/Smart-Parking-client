@@ -6,11 +6,11 @@ export const addRoutineThunk = createAsyncThunk(
     'addRoutineThunk',
     // פונקציה להפעלה 
    
-    async (routine) => {
+    async ({routine,driverCode}) => {
    
                    console.log(routine,"cameToAddRoutine");
 
-                const response = await fetch(`https://localhost:7164/api/Routine`, {
+                const response = await fetch(`https://localhost:7164/api/Routine/AddRoutine/${driverCode}`, {
                     method: 'POST',
                     body: JSON.stringify(routine),
                     headers: {
