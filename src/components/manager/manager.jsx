@@ -205,12 +205,12 @@ import { getAllDriversThunk } from '../../redux/Thunks/getAllDriversThunk';
     // טעינת נתונים בעת טעינת הקומפוננטה - רק פעם אחת
     useEffect(() => {
       const fetchAllData = async () => {
-        console.log("Fetching all data...");
+        
         
         // קריאה 1 - Parking
         try {
           await dispatch(getAllParkingThunk("P1"));
-          console.log("Parking data fetched successfully");
+          
         } catch (error) {
           console.error("Error fetching parking data:", error);
         }
@@ -218,7 +218,7 @@ import { getAllDriversThunk } from '../../redux/Thunks/getAllDriversThunk';
         // קריאה 2 - Drivers  
         try {
           await dispatch(getAllDriversThunk());
-          console.log("Drivers data fetched successfully");
+          
         } catch (error) {
           console.error("Error fetching drivers data:", error);
         }
@@ -226,12 +226,12 @@ import { getAllDriversThunk } from '../../redux/Thunks/getAllDriversThunk';
         // קריאה 3 - Payments
         try {
           await dispatch(getAllPaymentsThunk());
-          console.log("Payments data fetched successfully");
+          
         } catch (error) {
           console.error("Error fetching payments data:", error);
         }
     
-        console.log("All fetch attempts completed");
+        
       };
     
       fetchAllData();
@@ -395,7 +395,7 @@ import { getAllDriversThunk } from '../../redux/Thunks/getAllDriversThunk';
 
     return (
       <div className="manager-dashboard">
-        {/* Header */}
+        
         <AppBar position="sticky" className="premium-app-bar">
           <Toolbar>
             <IconButton
@@ -467,7 +467,7 @@ import { getAllDriversThunk } from '../../redux/Thunks/getAllDriversThunk';
           <StyledBackButton />
         </AppBar>
 
-        {/* Background Elements */}
+        
         <div className="premium-background">
           <div className="premium-shape shape-1"></div>
           <div className="premium-shape shape-2"></div>
@@ -476,12 +476,12 @@ import { getAllDriversThunk } from '../../redux/Thunks/getAllDriversThunk';
           <div className="premium-shape shape-5"></div>
         </div>
 
-        {/* Main Content */}
+        
         <Container maxWidth="lg" className="premium-content-container">
           <Grow in={true} timeout={800}>
             <Card className="premium-card">
               <CardContent className="premium-card-content">
-                {/* Welcome Section */}
+                
                 <Box className="welcome-section">
                   <Typography variant="h4" component="h1" className="welcome-title">
                     {greeting}, מנהל
@@ -491,7 +491,7 @@ import { getAllDriversThunk } from '../../redux/Thunks/getAllDriversThunk';
                   </Typography>
                 </Box>
 
-                {/* Quick Stats - עם נתונים אמיתיים ללא toFixed */}
+                
                 <Grid container spacing={3} className="quick-stats-grid">
                   <Grid item xs={12} sm={6} md={3}>
                     <Paper elevation={2} className="stat-paper">
@@ -555,7 +555,7 @@ import { getAllDriversThunk } from '../../redux/Thunks/getAllDriversThunk';
                   </Grid>
                 </Grid>
 
-                {/* Main Actions */}
+                
                 <Typography variant="h5" component="h2" className="section-title">
                   ניהול החניון
                 </Typography>
@@ -596,7 +596,7 @@ import { getAllDriversThunk } from '../../redux/Thunks/getAllDriversThunk';
                   ))}
                 </Grid>
 
-                {/* Recent Alerts - עם נתונים אמיתיים */}
+                
                 <Box className="alerts-section">
                   <Box className="alerts-header">
                     <Typography variant="h5" component="h2" className="section-title">
@@ -644,7 +644,7 @@ import { getAllDriversThunk } from '../../redux/Thunks/getAllDriversThunk';
                   </Paper>
                 </Box>
 
-                {/* Real-time Statistics Section - ללא toFixed */}
+                
                 <Box className="analytics-preview">
                   <Box className="analytics-header">
                     <Typography variant="h5" component="h2" className="section-title">
@@ -716,7 +716,7 @@ import { getAllDriversThunk } from '../../redux/Thunks/getAllDriversThunk';
                         </Grid>
                     </Grid>
                     
-                    {/* הוסף שורה נוספת עם פירוט כספי - ללא toFixed */}
+                    
                     <Grid container spacing={2} sx={{ mt: 2, pt: 2, borderTop: '1px solid #e0e0e0' }}>
                         <Grid item xs={12} md={4}>
                             <Box className="stat-box">
@@ -761,7 +761,7 @@ import { getAllDriversThunk } from '../../redux/Thunks/getAllDriversThunk';
                   </Paper>
                 </Box>
 
-                {/* Quick Actions Footer עם נתונים מעודכנים */}
+                
                 <Box className="quick-actions-footer">
                   <Button
                     variant="contained"
@@ -801,7 +801,7 @@ import { getAllDriversThunk } from '../../redux/Thunks/getAllDriversThunk';
                   </Button>
                 </Box>
 
-                {/* System Status */}
+                
                 <Box className="system-status">
                   <Typography variant="h6" className="status-title">
                     סטטוס המערכת
@@ -836,7 +836,7 @@ import { getAllDriversThunk } from '../../redux/Thunks/getAllDriversThunk';
                   </Grid>
                 </Box>
 
-                {/* סיכום כספי יומי - ללא toFixed */}
+                
                 <Box className="financial-summary" sx={{ mt: 3 }}>
                   <Typography variant="h6" className="status-title">
                     סיכום כספי כללי
@@ -897,7 +897,7 @@ import { getAllDriversThunk } from '../../redux/Thunks/getAllDriversThunk';
                       </Grid>
                     </Grid>
                     
-                    {/* אחוז גביה כללי */}
+                    
                     <Box sx={{ mt: 2, pt: 2, borderTop: '1px solid #e0e0e0', textAlign: 'center' }}>
                       <Typography variant="h6" color="primary.main">
                         אחוז גביה כללי: {analyticsData.collectionRate}%
@@ -909,7 +909,7 @@ import { getAllDriversThunk } from '../../redux/Thunks/getAllDriversThunk';
                   </Paper>
                 </Box>
 
-                {/* תובנות וסיכום */}
+                
                 <Box className="insights-section" sx={{ mt: 3 }}>
                   <Typography variant="h6" className="status-title">
                     תובנות ומלצות

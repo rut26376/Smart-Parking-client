@@ -22,13 +22,11 @@ export const ManagerSlice = createSlice({
             else state.isManager = false;
         })
         builder.addCase(isManagerThunk.rejected, (state, action) => {
-            console.log("noooooooooo");
         })
          builder.addCase(getAllDriversThunk.fulfilled, (state, action) => {
             state.drivers = action.payload;
         })
         builder.addCase(getAllDriversThunk.rejected, (state, action) => {
-            console.log("didnt work");
         })
 
     }

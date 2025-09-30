@@ -383,7 +383,7 @@ export const Paying = () => {
 
   return (
     <>
-      {/* Background Elements */}
+      
       <div className="premium-payment-background">
         <div className="premium-payment-shape payment-shape-1"></div>
         <div className="premium-payment-shape payment-shape-2"></div>
@@ -392,7 +392,7 @@ export const Paying = () => {
       <div className='inputsPaying'>
         {!paymentComplete ? (
           <>
-            {/* Payment Header */}
+            
             <div className="payment-logo">
               <svg xmlns="http://www.w3.org/2000/svg" width="100" height="60" viewBox="0 0 100 60">
                 <rect width="100" height="60" rx="10" fill="#1434CB"/>
@@ -401,7 +401,7 @@ export const Paying = () => {
               <p>תשלום מאובטח</p>
             </div>
 
-            {/* Payment Summary */}
+            
             <div className="payment-summary">
               <div className="payment-summary-title">
                 <Receipt style={{ fontSize: '1.2rem' }} />
@@ -421,7 +421,7 @@ export const Paying = () => {
               </div>
             </div>
 
-            {/* Card Type Indicator */}
+            
             <div className="card-type-indicator">
               <MastercardLogo 
                 alt="MasterCard" 
@@ -437,14 +437,14 @@ export const Paying = () => {
               />
             </div>
 
-            {/* Credit Card Form */}
+            
             <div className="card-form-section">
               <div className="card-form-title">
                 <CreditCard />
                 פרטי כרטיס אשראי
               </div>
 
-              {/* מספר כרטיס אשראי */}
+              
               <div className="input-with-icon">
                 <input 
                   className={`inputs card-number-input ${touchedFields.cardNumber && !cardValidation.cardNumber.valid ? 'error' : touchedFields.cardNumber && cardValidation.cardNumber.valid ? 'success' : ''}`}
@@ -463,7 +463,7 @@ export const Paying = () => {
                 )}
               </div>
 
-              {/* שורת פרטי אבטחה */}
+              
               <div className="card-security-row">
                 <div style={{ flex: 1 }}>
                   <input 
@@ -502,7 +502,7 @@ export const Paying = () => {
                 </div>
               </div>
 
-              {/* תעודת זהות */}
+              
               <div>
                 <input 
                   className={`inputs ${touchedFields.id && !cardValidation.id.valid ? 'error' : touchedFields.id && cardValidation.id.valid ? 'success' : ''}`}

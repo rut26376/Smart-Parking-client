@@ -38,13 +38,11 @@ export const DriverSlice = createSlice({
         })
         builder.addCase(loginThunk.rejected, (state, action) => {
             state.isNew = true;
-            console.log("noooooooooo");
         })
         builder.addCase(addDriverThunk.fulfilled, (state, action) => {
             state.code = action.payload;
         })
         builder.addCase(addDriverThunk.rejected, (state, action) => {
-            console.log("fail");
         })
         builder.addCase(getAllDriversThunk.fulfilled, (state, action) => {
             

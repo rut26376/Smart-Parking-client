@@ -1,14 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const addCreditCardThunk = createAsyncThunk(
-
-    // הפונקציה מקבלת את השם 
     'addCreditCardThunk',
-    // פונקציה להפעלה 
-
     async (creditCard) => {
-        
-        console.log(creditCard, "creditCard");
         const card = {
             creditCardNum: creditCard.creditCardNum,
             validityCard: creditCard.validityCard,

@@ -1,75 +1,95 @@
 
-# Getting Started with Create React App
+## Smart-Parking — Client App (React)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern React client for a smart parking and payments system. Built with React 18, Redux Toolkit, React Router, and MUI. This app enables drivers to view parking availability, manage vehicles and credit cards, pay for parking, and provides a manager area with reports.
 
-## Available Scripts
+### Highlights
+- Clean UI with MUI and styled-components
+- State management with Redux Toolkit
+- Routing with React Router
+- Secure API communication over HTTPS
 
-In the project directory, you can run:
+### Features
+- Authentication and driver onboarding
+- Parking availability by level and “Find my car”
+- Payments flow and credit card management
+- Manager dashboard and reports
 
-### `npm start`
+### Tech Stack
+- React 18, React Router DOM
+- Redux Toolkit, React-Redux
+- MUI, styled-components
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Architecture (Client-side)
+- Thunks handle async API calls to the server
+- Slices store domain state (parking, payments, user)
+- Components are grouped by domain modules
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Project Structure
+- `src/components/*` — UI modules (e.g., `parking`, `paying`, `manager`)
+- `src/redux/slices/*` — Redux slices
+- `src/redux/Thunks/*` — Async API thunks
+- `src/routing/*` — App routes
 
-### `npm test`
+### Getting Started
+1) Install dependencies:
+```bash
+npm install
+```
+2) Run the app in development mode:
+```bash
+npm start
+```
+The app runs at `http://localhost:3000`.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+3) Build for production:
+```bash
+npm run build
+```
 
-### `npm run build`
+### API Configuration
+The client targets `https://localhost:7164` by default (server HTTPS profile). If your server port differs, update URLs in `src/redux/Thunks/*`.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Key endpoints used by thunks:
+- `GET https://localhost:7164/api/Parking/GetAllParkingPlaces/{level}`
+- `GET https://localhost:7164/api/Routine/GetPrice/{licensePlate}`
+- `GET https://localhost:7164/api/Driver/GetDriverVehicles/{name}/{password}`
+- `POST https://localhost:7164/api/Payment/AddPayment/{licensePlate}/{numOfPayments}`
+- `GET https://localhost:7164/api/CPManager/isManager/{name}/{code}`
+- `POST https://localhost:7164/api/CreditCards/addCreditCard`
+- `POST https://localhost:7164/api/Driver/AddDriver`
+- `POST https://localhost:7164/api/Routine/AddRoutine/{driverCode}`
+- `GET https://localhost:7164/api/Routine/FindMyCar/{licensePlate}`
+- `GET https://localhost:7164/api/Driver/getAll`
+- `GET https://localhost:7164/api/Payment/GetPayments`
+- `GET https://localhost:7164/api/Routine/GetCarExists/{licensePlate}`
+- `GET https://localhost:7164/api/CreditCards/get/{driverCode}`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Example (curl):
+```bash
+curl -k https://localhost:7164/api/Parking/GetAllParkingPlaces/1
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Testing
+```bash
+npm test
+```
 
-### `npm run eject`
+### Screenshots / Demo
+Add GIFs or screenshots here to showcase core flows.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Challenges & What I Learned
+- Coordinating client thunks with server endpoints and CORS
+- Designing a clear domain-oriented folder structure
+- Managing auth-like flows without full auth infra
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Roadmap
+- Add environment-based API base URL configuration
+- Strengthen input validation and error handling
+- Add i18n (English/Hebrew toggle)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### License / Contact
+Educational/internal project. For inquiries, please contact the maintainers.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
- # Ruty and Rivki"# finalParkingProjectClient" 
-# finalParkingProjectClient
-18/05/2025
-
+### Hebrew Summary (תקציר בעברית)
+אפליקציית לקוח לניהול ותשלום חניה חכמה. כוללת מסכי חניון, תשלום, וניהול, עם Redux לניהול מצב ו-MUI לעיצוב. לשימוש מקומי: `npm install` ואז `npm start`. האפליקציה פונה ל-API ב-`https://localhost:7164`. במעבר לפרודקשן מומלץ להגדיר כתובת API בסביבה ולהקשיח CORS.

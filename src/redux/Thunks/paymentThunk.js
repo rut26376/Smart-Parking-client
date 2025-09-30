@@ -1,18 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const paymentThunk = createAsyncThunk(
-   
-    // הפונקציה מקבלת את השם 
     'paymentThunk',
-    // פונקציה להפעלה 
-   
     async ({blPayment , blCreditCards , licensePlate , numOfPayments}) => {
       
  
-        // const shalvush = {
-        //     blPayment:blPayment,
-        //     blCreditCards:blCreditCards
-        // }
         const shalvush = {
            
                 blPayment: {
@@ -40,10 +32,7 @@ export const paymentThunk = createAsyncThunk(
             }
         });
         if (response.ok) {
-            
-            console.log("came to thunk");
             const data = await response.json();
-            console.log(data);
             return data;
         }
         else { 

@@ -203,14 +203,7 @@
     );
 }
 
-/* מיקום הקווים המקווקווים - מותאם כך שלא יעלה על חניות
-.path-top { top: 5px !important; left: 0% !important; width: 99% !important; height: 4px !important; }
-.path-right-1 { top: 5px; right: 1%; left: auto; width: 4px; height: 40%; }
-.path-middle-1 { top: 45%; left: 2%; width: 78%; height: 4px; }
-.path-left { top: 45%; left: 1%; width: 4px; height: 40%; }
-.path-middle-2 { top: 85%; left: 2%; width: 78%; height: 4px; }
-.path-right-2 { top: 85%; right: 1%; left: auto; width: 4px; height: 15%; }
-.path-bottom { bottom: 2%; right: 1%; left: auto; top: auto; width: 10%; height: 4px; } */
+/* מיקום הקווים המקווקווים */
 
 /* התאמת צבעים למקרא */
 .cp[style*="backgroundColor: white"] {
@@ -236,14 +229,7 @@
     box-shadow: none; /* הסרת הצל */
 }
 
-/* .cp[style*="backgroundColor: rgb(158, 168, 166)"] {
-    background-color: rgba(14, 165, 233, 0.7) !important; /* צבע הרכב שלך */
- 
 
-
-      /*border: 0; הסרת הגבול */
-    /* box-shadow: none;  הסרת הצל */
-/* } */
 
 /* עדכון סגנון מספר החניה */
 .spot-number {
@@ -292,13 +278,7 @@
     filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4)) !important;
 }
 
-/* אנימציה לאייקון הרכב בחניה נבחרת או הרכב שלך */
-/* .cp[style*="backgroundColor: yellow"] .car-icon,
-.cp[style*="backgroundColor: rgba(14, 165, 233, 0.7)"] .car-icon {
-    animation: carSelected 1.5s infinite alternate;
-    opacity: 0.9 !important;
-    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4)) !important;
-} */
+
 
 /* רכב בחניות פנויות - פחות מעומעם */
 .cp[style*="backgroundColor: #334155"] .car-icon {
@@ -380,12 +360,7 @@
     animation: pulse 1.5s infinite alternate;
 }
 
-/* .cp[style*="backgroundColor: rgb(158, 168, 166)"] {
-    background-color: rgba(14, 165, 233, 0.7) !important; /* התאמה ל-legend-current 
-    border: 1px solid rgba(125, 211, 252, 0.3);
-    box-shadow: 0 0 15px rgba(14, 165, 233, 0.3);
-    animation: pulse 1.5s infinite alternate;
-} */
+
 
 @keyframes pulse {
     0% {
@@ -1359,10 +1334,4 @@
     background-color: white;
     border-radius: 11px;
 }
-/* הגדלת האפקט בעת מעבר עכבר */
-/* .yellow-pulse-animation:hover {
-    animation: yellowPulseAnimation 0.6s infinite; /* היבהוב מהיר יותר בעת מעבר עכבר 
-    box-shadow: 0 0 25px rgba(250, 204, 21, 0.9) !important; /* צל חזק יותר 
-    transform: scale(1.08);
-    transition: transform 0.2s ease;
-} */
+

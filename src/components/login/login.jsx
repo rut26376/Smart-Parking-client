@@ -95,7 +95,7 @@ export const Login = () => {
 
     return (
         <div className="premium-login-container">
-            {/* Header */}
+            
             <AppBar position="sticky" className="premium-app-bar">
                 <Toolbar>
 
@@ -122,7 +122,7 @@ export const Login = () => {
                 </Toolbar>
             </AppBar>
 
-            {/* Background Elements */}
+            
             <div className="premium-background">
                 <div className="premium-shape shape-1" style={{ animation: 'none' }}></div>
                 <div className="premium-shape shape-2" style={{ animation: 'none' }}></div>
@@ -131,13 +131,13 @@ export const Login = () => {
                 <div className="premium-shape shape-5" style={{ animation: 'none' }}></div>
             </div>
 
-            {/* Main Content */}
+            
             <Container maxWidth="lg" className="premium-content-container">
                 <Grow in={true} timeout={800}>
                     <Card className="premium-card">
                         <CardContent className="premium-card-content">
                             <Grid container>
-                                {/* Left Side - Image and Info */}
+                                
                                 <Grid item xs={12} md={5} className="premium-left-panel">
                                     <div className="premium-info-panel">
                                         <div className="premium-brand">
@@ -206,7 +206,7 @@ export const Login = () => {
                                     </div>
                                 </Grid>
 
-                                {/* Right Side - Login Form */}
+                                
                                 <Grid item xs={12} md={7} className="premium-right-panel">
                                     <Tabs
                                         value={activeTab}
@@ -217,7 +217,7 @@ export const Login = () => {
                                     >
                                         <Tab label="התחברות" className="premium-tab" />
                                         <Tab label="מידע" className="premium-tab" />
-                                        {/* <Tab label="כניסת מנהל" className="premium-tab" /> */}
+                                        
                                     </Tabs>
 
                                     {activeTab === 0 && (
@@ -375,7 +375,7 @@ export const Login = () => {
                 </Grow>
             </Container>
 
-            {/* Error Snackbar */}
+            
             <Snackbar
                 open={showError}
                 autoHideDuration={6000}

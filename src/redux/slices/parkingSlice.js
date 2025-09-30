@@ -18,8 +18,7 @@ const INITIAL_STATE_PARKING = {
         col: 0,
         level: ""
     },
-
-    // exit: false,
+    
     enter: false
 }
 export const ParkingSlice = createSlice({
@@ -37,11 +36,9 @@ export const ParkingSlice = createSlice({
             state.carParkings = action.payload;
         })
         builder.addCase(getAllParkingThunk.rejected, (state, action) => {
-            console.log("noooooooooo");
         })
         builder.addCase(getCarExists.fulfilled, (state, action) => {
             
-            console.log("enter");
             state.enter = action.payload;
             if (state.enter === "true") {
                 state.avilable = state.carParkings.find(p => !p.used);
@@ -49,7 +46,6 @@ export const ParkingSlice = createSlice({
 
         })
         builder.addCase(getCarExists.rejected, (state, action) => {
-            console.log("noooooooooo");
         })
     }
 })

@@ -283,7 +283,7 @@ export const PaymentReports = () => {
 
     return (
         <Box sx={{ p: 3, direction: 'rtl' }}>
-            {/* כותרת */}
+            
             <Box sx={{ mb: 3, display: 'flex', alignItems: 'center', gap: 2 }}>
                 <Payment sx={{ fontSize: 40, color: '#0EA5E9' }} />
                 <Typography variant="h4" component="h1">
@@ -291,7 +291,7 @@ export const PaymentReports = () => {
                 </Typography>
             </Box>
 
-            {/* סיכום תשלומים */}
+            
             <Grid container spacing={3} sx={{ mb: 4 }}>
                 <Grid item xs={12} md={3}>
                     <Card sx={{ bgcolor: '#10B981', color: 'white' }}>
@@ -350,7 +350,7 @@ export const PaymentReports = () => {
                 </Grid>
             </Grid>
 
-            {/* פילטרים וחיפוש */}
+            
             <Paper sx={{ p: 2, mb: 3 }}>
                 <Grid container spacing={2} alignItems="center">
                     <Grid item xs={12} md={4}>
@@ -394,7 +394,7 @@ export const PaymentReports = () => {
                 </Grid>
             </Paper>
 
-            {/* טבלת תשלומים */}
+            
             <Paper>
                 <TableContainer>
                     <Table>
@@ -480,7 +480,7 @@ export const PaymentReports = () => {
                     </Table>
                 </TableContainer>
 
-                {/* Pagination */}
+                
                 <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
                     <Pagination
                         count={totalPages}
@@ -491,7 +491,7 @@ export const PaymentReports = () => {
                 </Box>
             </Paper>
 
-            {/* דיאלוג פרטי תשלום */}
+            
             <Dialog
                 open={dialogOpen}
                 onClose={() => setDialogOpen(false)}
@@ -508,7 +508,7 @@ export const PaymentReports = () => {
                 <DialogContent>
                     {selectedPayment && (
                         <Grid container spacing={3}>
-                            {/* סיכום קבוצת התשלום */}
+                            
                             <Grid item xs={12}>
                                 <Card sx={{ bgcolor: 'primary.main', color: 'white' }}>
                                     <CardContent>
@@ -552,7 +552,7 @@ export const PaymentReports = () => {
                                 </Card>
                             </Grid>
 
-                            {/* פירוט התשלומים - רק אם זה לא תשלום יחיד */}
+                            
                             {!selectedPayment.isSinglePayment && selectedPayment.paymentsDetails.length > 0 && (
                                 <Grid item xs={12}>
                                     <Typography variant="h6" gutterBottom>
@@ -604,7 +604,7 @@ export const PaymentReports = () => {
                                 </Grid>
                             )}
 
-                            {/* מידע על תשלום יחיד */}
+                            
                             {selectedPayment.isSinglePayment && (
                                 <Grid item xs={12}>
                                     <Card sx={{ bgcolor: 'success.light', color: 'success.contrastText' }}>
@@ -634,7 +634,7 @@ export const PaymentReports = () => {
                     </Button>
                     <Button
                         onClick={() => {
-                            console.log('הדפסת קבלה עבור תשלום:', selectedPayment?.paymentId);
+                            
                         }}
                         variant="outlined"
                     >

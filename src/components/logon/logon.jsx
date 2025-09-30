@@ -35,7 +35,7 @@ export const Logon = () => {
     const checkDetails = () => {
         setLoading(true);
         let flag = true;
-        console.log(driver, licenseP);
+        
 
         if (driver.name.length <= 1 || driver.name.length > 15) {
             flag = false;
@@ -81,7 +81,7 @@ export const Logon = () => {
 
     return (
         <div className="premium-registration-container">
-            {/* רקע עם צורות */}
+            
             <div className="premium-background">
                 <div className="premium-shape shape-1"></div>
                 <div className="premium-shape shape-2"></div>
@@ -90,12 +90,12 @@ export const Logon = () => {
                 <div className="premium-shape shape-5"></div>
             </div>
 
-            {/* תוכן ראשי */}
+            
             <Container maxWidth="lg" className="premium-content-container">
                 <Card className="premium-card">
                     <CardContent className="premium-card-content">
                         <Grid container>
-                            {/* צד שמאל - מידע */}
+                            
                             <Grid item xs={12} md={5} className="premium-left-panel">
                                 <div className="premium-info-panel">
                                     <div className="premium-brand">
@@ -162,7 +162,7 @@ export const Logon = () => {
                                 </div>
                             </Grid>
 
-                            {/* צד ימין - טופס הרשמה */}
+                            
                             <Grid item xs={12} md={7} className="premium-right-panel">
                                 <Box className="premium-login-form">
                                     <Typography variant="h4" className="premium-form-title">
@@ -365,7 +365,7 @@ export const Logon = () => {
                 </Card>
             </Container>
 
-            {/* הודעת שגיאה */}
+            
             <Snackbar
                 open={showError}
                 autoHideDuration={6000}

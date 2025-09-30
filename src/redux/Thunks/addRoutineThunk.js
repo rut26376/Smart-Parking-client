@@ -2,13 +2,9 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 
 export const addRoutineThunk = createAsyncThunk(
-    // הפונקציה מקבלת את השם 
     'addRoutineThunk',
-    // פונקציה להפעלה 
-   
+
     async ({routine,driverCode}) => {
-   
-                   console.log(routine,"cameToAddRoutine");
 
                 const response = await fetch(`https://localhost:7164/api/Routine/AddRoutine/${driverCode}`, {
                     method: 'POST',

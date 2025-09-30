@@ -251,7 +251,7 @@ const drivers = useSelector(state => state.driver?.allDrivers || []);
         </Alert>
       )}
 
-      {/* סטטיסטיקות */}
+      
       <Grid container spacing={3} sx={{ mb: 3 }}>
         <Grid item xs={12} sm={6} md={3}>
           <StatCard 
@@ -287,7 +287,7 @@ const drivers = useSelector(state => state.driver?.allDrivers || []);
         </Grid>
       </Grid>
 
-      {/* כלי בקרה */}
+      
       <Paper sx={{ p: 2, mb: 2 }}>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={12} md={4}>
@@ -334,7 +334,7 @@ const drivers = useSelector(state => state.driver?.allDrivers || []);
         </Grid>
       </Paper>
 
-      {/* טבלת משתמשים - מותאם לשדות החדשים */}
+      
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -410,7 +410,7 @@ const drivers = useSelector(state => state.driver?.allDrivers || []);
         )}
       </TableContainer>
 
-      {/* עמוד */}
+      
       <TablePagination
         component="div"
         count={filteredDrivers.length}
@@ -424,7 +424,7 @@ const drivers = useSelector(state => state.driver?.allDrivers || []);
         }
       />
 
-      {/* תפריט פעולות */}
+      
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
@@ -464,11 +464,11 @@ const drivers = useSelector(state => state.driver?.allDrivers || []);
         </MenuItem>
       </Menu>
 
-      {/* דיאלוגים */}
+      
       <UserDetailsDialog />
       <DeleteDialog />
 
-      {/* דיאלוג עריכה - מותאם לשדות החדשים */}
+      
       <Dialog open={openDialog && dialogType === 'edit'} onClose={handleCloseDialog} maxWidth="sm" fullWidth>
         <DialogTitle>עריכת פרטי משתמש</DialogTitle>
         <DialogContent>

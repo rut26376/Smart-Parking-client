@@ -33,21 +33,16 @@ export const CreditCardsSlice = createSlice({
     extraReducers: (builder) => {
 
         builder.addCase(getDriversCardsThunk.fulfilled, (state, action) => {
-            console.log(action.payload, "action.payload from cc");
             state.creditCards = action.payload
             if (state.creditCards.length > 0)
                 state.lastCreditCards = state.creditCards[state.creditCards.length - 1]
         })
         builder.addCase(getDriversCardsThunk.rejected, (state, action) => {
             state.isNew = true;
-            console.log("noooooooooo");
         })
         builder.addCase(addCreditCardThunk.fulfilled, (state, action) => {
-
-            console.log("yessss");
         })
         builder.addCase(addCreditCardThunk.rejected, (state, action) => {
-            console.log("noooooooooo");
         })
     }
 })
